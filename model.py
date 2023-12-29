@@ -1,5 +1,14 @@
 from sqlalchemy.orm import declarative_base
-from sqlalchemy import Column, Integer, String, CHAR, MetaData, VARCHAR
+from sqlalchemy import (
+    Column,
+    Integer,
+    String,
+    CHAR,
+    MetaData,
+    VARCHAR,
+    ForeignKey,
+    UniqueConstraint,
+)
 from sqlalchemy.dialects.postgresql import TIMESTAMP, NUMERIC
 
 
@@ -75,4 +84,47 @@ class Bookings(Base):
             self.book_ref,
             self.book_date,
             self.total_amount,
+        )
+
+
+class Flights(Base):
+    __tablename__ = "flights"
+
+    flight_id = Column(Integer, nullable=True, primary_key=True)
+    flight_no = Column(
+        CHAR(6),
+        ForeignKey("aircrafts.aircraft_code"),
+        nullable=True,
+    )
+    scheduled_departure = Column(TIMESTAMP(timezone=True), nullable=True)
+    scheduled_arrival = Column(TIMESTAMP(timezone=True), nullable=True)
+    departure_airport = Column(
+        CHAR(3), ForeignKey("airports.airport_code"), nullable=True
+    )
+    arrival_airport = Column(
+        CHAR(3), ForeignKey("airports.airport_code"), nullable=True
+    )
+    status = Column(VARCHAR(20), nullable=True)
+    aircraft_code = Column(CHAR(3), nullable=True)
+    actual_departure = Column(TIMESTAMP(timezone=True), nullable=True)
+    actual_arrival = Column(TIMESTAMP(timezone=True), nullable=True)
+
+    __table_args__ = tuple(UniqueConstraint("flight_no", "scheduled_departure"))
+
+    def __repr__(self):
+        return (
+            "<Flights(flight_id='%s', flight_no='%s', scheduled_departure='%s', scheduled_arrival='%s', departure_airport='%s', arrival_airport='%s', \
+                status='%s', aircraft_code='%s', actual_departure='%s', actual_arrival='%s')>"
+            % (
+                self.flight_id,
+                self.flight_no,
+                self.scheduled_departure,
+                self.scheduled_arrival,
+                self.departure_airport,
+                self.arrival_airport,
+                self.status,
+                self.aircraft_code,
+                self.actual_departure,
+                self.actual_arrival,
+            )
         )

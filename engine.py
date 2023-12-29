@@ -1,15 +1,15 @@
-from model import Aircrafts, Airports, BoardingPasses
+from model import Aircrafts, Airports, BoardingPasses, Bookings, Flights
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-engine = create_engine("<>")
+engine = create_engine("")
 
 Session = sessionmaker()
 Session.configure(bind=engine)
 
 session = Session()
 
-aircrafts = session.query(BoardingPasses).where(BoardingPasses.seat_no == "23B")
+aircrafts = session.query(Flights).all()
 
 for a in aircrafts:
     print(a)
