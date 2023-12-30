@@ -77,7 +77,7 @@ class Bookings(Base):
 
     book_ref = Column(CHAR(6), primary_key=True, nullable=False)
     book_date = Column(TIMESTAMP(timezone=True), nullable=False)
-    total_amount = Column(NUMERIC(10, 2), nullable=True)
+    total_amount = Column(NUMERIC(10, 2), nullable=False)
 
     def __repr__(self):
         return "<Bookings(book_ref='%s', book_date='%s', total_amount='%s')>" % (
@@ -90,22 +90,22 @@ class Bookings(Base):
 class Flights(Base):
     __tablename__ = "flights"
 
-    flight_id = Column(Integer, nullable=True, primary_key=True)
+    flight_id = Column(Integer, nullable=False, primary_key=True)
     flight_no = Column(
         CHAR(6),
         ForeignKey("aircrafts.aircraft_code"),
-        nullable=True,
+        nullable=False,
     )
-    scheduled_departure = Column(TIMESTAMP(timezone=True), nullable=True)
-    scheduled_arrival = Column(TIMESTAMP(timezone=True), nullable=True)
+    scheduled_departure = Column(TIMESTAMP(timezone=True), nullable=False)
+    scheduled_arrival = Column(TIMESTAMP(timezone=True), nullable=False)
     departure_airport = Column(
-        CHAR(3), ForeignKey("airports.airport_code"), nullable=True
+        CHAR(3), ForeignKey("airports.airport_code"), nullable=False
     )
     arrival_airport = Column(
-        CHAR(3), ForeignKey("airports.airport_code"), nullable=True
+        CHAR(3), ForeignKey("airports.airport_code"), nullable=False
     )
-    status = Column(VARCHAR(20), nullable=True)
-    aircraft_code = Column(CHAR(3), nullable=True)
+    status = Column(VARCHAR(20), nullable=False)
+    aircraft_code = Column(CHAR(3), nullable=False)
     actual_departure = Column(TIMESTAMP(timezone=True), nullable=True)
     actual_arrival = Column(TIMESTAMP(timezone=True), nullable=True)
 
