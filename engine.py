@@ -5,6 +5,7 @@ from sqlalchemy.orm import sessionmaker
 import os
 
 load_dotenv()
+
 POSTGRES_USER = os.environ.get("POSTGRES_USER")
 POSTGRES_PASSWORD = os.environ.get("POSTGRES_PASSWORD")
 POSTGRES_HOST = os.environ.get("POSTGRES_HOST")
@@ -19,7 +20,7 @@ Session = sessionmaker()
 Session.configure(bind=engine)
 session = Session()
 
-aircrafts = session.query(Flights).all()
+aircrafts = session.query(Flights.status).all()
 
 for a in aircrafts:
     print(a)

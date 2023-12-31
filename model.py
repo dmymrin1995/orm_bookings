@@ -128,3 +128,18 @@ class Flights(Base):
                 self.actual_arrival,
             )
         )
+
+
+class Seats(Base):
+    __tablename__ = "seats"
+
+    aircraft_code = Column(CHAR(3), primary_key=True, nullable=False)
+    seat_no = Column(VARCHAR(4), nullable=False)
+    fare_conditions = Column(VARCHAR(10), nullable=False)
+
+    def __repr__(self):
+        return "<Flights(aircraft_code='%s', seat_no='%s', fare_conditions='%s')>" % (
+            self.aircraft_code,
+            self.fare_conditions,
+            self.seat_no,
+        )
